@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Inertia\Inertia;
@@ -17,7 +18,8 @@ class ProductController extends Controller
     public function index(): Response
     {
         return Inertia::render('Products/Index', [
-            'products' => Product::orderBy('created_at', 'desc')->get(),
+            'products' => Product::with('category')->orderBy('created_at', 'desc')->get(),
+            'categories' => Category::where('active', true)->get(),
         ]);
     }
 
@@ -33,9 +35,11 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'status' => 'required|in:active,inactive,discontinued',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
 
         $product = Product::create($validated);
+        $product->load('category');
 
         return response()->json([
             'message' => '¡Producto creado exitosamente!',
@@ -55,10 +59,12 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'status' => 'required|in:active,inactive,discontinued',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
 
         $product = Product::findOrFail($id);
         $product->update($validated);
+        $product->load('category');
 
         return response()->json([
             'message' => '¡Producto actualizado exitosamente!',

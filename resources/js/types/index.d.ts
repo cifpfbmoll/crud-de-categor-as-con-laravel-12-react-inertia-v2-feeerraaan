@@ -16,6 +16,8 @@ export interface Product {
     price: number;
     stock: number;
     status: 'active' | 'inactive' | 'discontinued';
+    category_id: number | null;
+    category?: Category | null;
     created_at: string;
     updated_at: string;
 }
@@ -25,6 +27,21 @@ export interface Product {
  */
 export interface ProductsPageProps extends Record<string, unknown> {
     products: Product[];
+    categories: Category[];
+}
+
+export interface Category {
+    id: number;
+    name: string;
+    description: string | null;
+    color: string | null;
+    active: boolean;
+    created_at: string;
+    updated_at: string;
+}
+
+export interface CategoriesPageProps extends Record<string, unknown> {
+    categories: Category[];
 }
 
 export type PageProps<

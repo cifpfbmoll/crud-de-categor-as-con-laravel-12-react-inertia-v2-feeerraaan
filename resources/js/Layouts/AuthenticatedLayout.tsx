@@ -39,6 +39,12 @@ export default function Authenticated({
                                 >
                                     Productos
                                 </NavLink>
+                                <NavLink
+                                    href={route('categories.index')}
+                                    active={route().current('categories.index')}
+                                >
+                                    Categorías
+                                </NavLink>
                             </div>
                         </div>
 
@@ -148,6 +154,12 @@ export default function Authenticated({
                             active={route().current('products.index')}
                         >
                             Productos
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('categories.index')}
+                            active={route().current('categories.index')}
+                        >
+                            Categorías
                         </ResponsiveNavLink>
                     </div>
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, FormEventHandler } from 'react';
-import { Product } from '@/types';
+import { Product, Category } from '@/types';
 import Modal from '@/Components/Modal';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
@@ -16,6 +16,7 @@ interface ProductModalProps {
     onSuccess: (product: Product) => void;
     mode: 'create' | 'edit';
     product?: Product | null;
+    categories: Category[];
 }
 
 /**
@@ -27,6 +28,7 @@ interface FormData {
     price: string;
     stock: string;
     status: Product['status'];
+    category_id: string;
 }
 
 /**
@@ -38,6 +40,7 @@ interface FormErrors {
     price?: string;
     stock?: string;
     status?: string;
+    category_id?: string;
 }
 
 /**
@@ -67,7 +70,8 @@ export default function ProductModal({
     onClose, 
     onSuccess, 
     mode, 
-    product 
+    product,
+    categories 
 }: ProductModalProps) {
     // Estado inicial del formulario
     const initialFormData: FormData = {
@@ -76,6 +80,7 @@ export default function ProductModal({
         price: '',
         stock: '0',
         status: 'active',
+        category_id: '',
     };
 
     const [formData, setFormData] = useState<FormData>(initialFormData);
@@ -91,6 +96,7 @@ export default function ProductModal({
                 price: product.price.toString(),
                 stock: product.stock.toString(),
                 status: product.status,
+                category_id: product.category_id ? product.category_id.toString() : '',
             });
         } else {
             setFormData(initialFormData);
@@ -154,6 +160,7 @@ export default function ProductModal({
                     price: parseFloat(formData.price),
                     stock: parseInt(formData.stock),
                     status: formData.status,
+                    category_id: formData.category_id ? parseInt(formData.category_id) : null,
                 }),
             });
 
@@ -204,8 +211,28 @@ export default function ProductModal({
                         value={formData.name}
                         onChange={(e) => handleChange('name', e.target.value)}
                         placeholder="Nombre del producto"
+                        autoFocus
                     />
                     <InputError message={errors.name} className="mt-2" />
+                </div>
+
+                {/* Campo: Categoría */}
+                <div className="mb-4">
+                    <InputLabel htmlFor="category_id" value="Categoría" />
+                    <select
+                        id="category_id"
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        value={formData.category_id}
+                        onChange={(e) => handleChange('category_id', e.target.value)}
+                    >
+                        <option value="">Seleccione una categoría</option>
+                        {categories.map(category => (
+                            <option key={category.id} value={category.id}>
+                                {category.name}
+                            </option>
+                        ))}
+                    </select>
+                    <InputError message={errors.category_id} className="mt-2" />
                 </div>
 
                 {/* Campo: Descripción */}

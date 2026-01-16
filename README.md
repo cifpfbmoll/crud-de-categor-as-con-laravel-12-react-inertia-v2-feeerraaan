@@ -16,11 +16,13 @@ Aplicación CRUD (Create, Read, Update, Delete) completa desarrollada con el sta
 ### ✨ Características
 
 - ✅ **CRUD completo** de productos
+- ✅ **CRUD completo** de categorías
+- ✅ **Relación** Producto-Categoría
 - ✅ **Autenticación** con Laravel Breeze
 - ✅ **SPA** (Single Page Application) con Inertia.js
 - ✅ **Tipado estático** con TypeScript
 - ✅ **UI moderna** con Tailwind CSS
-- ✅ **Modales** para crear/editar productos
+- ✅ **Modales** para crear/editar productos y categorías
 - ✅ **Validación** en frontend y backend
 
 ## 🚀 Instalación Rápida
@@ -40,11 +42,17 @@ npm install
 cp .env.example .env
 php artisan key:generate
 
+# Configurar Base de Datos (SQLite)
+# Windows (PowerShell):
+New-Item -ItemType File -Path database/database.sqlite -Force
+# Linux/Mac:
+# touch database/database.sqlite
+
 # Ejecutar migraciones
 php artisan migrate
 
 # Iniciar servidores de desarrollo
-php artisan serve &
+php artisan serve
 npm run dev
 ```
 
@@ -119,6 +127,14 @@ php artisan test
 # Verificar tipos TypeScript
 npm run types
 ```
+
+## 🎥 Vídeo Demostrativo
+
+[Enlace al vídeo demostrativo](URL_DEL_VIDEO)
+
+## 🤖 Nota sobre IA
+
+Documentación generada con asistencia de herramientas de IA, revisada y adaptada para este proyecto.
 
 ## 👨‍🏫 Autor
 

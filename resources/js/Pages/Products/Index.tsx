@@ -12,7 +12,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
  * 
  * @param products - Array de productos recibidos desde el backend via Inertia
  */
-export default function Index({ auth, products }: PageProps<ProductsPageProps>) {
+export default function Index({ auth, products, categories }: PageProps<ProductsPageProps>) {
     // Estado local para manejar los productos (permite actualizaciones optimistas)
     const [data, setData] = useState<Product[]>(products);
     
@@ -109,6 +109,7 @@ export default function Index({ auth, products }: PageProps<ProductsPageProps>) 
                 onClose={() => setIsCreateModalOpen(false)}
                 onSuccess={handleProductCreate}
                 mode="create"
+                categories={categories}
             />
 
             {/* Modal para editar producto */}
@@ -121,6 +122,7 @@ export default function Index({ auth, products }: PageProps<ProductsPageProps>) 
                 onSuccess={handleProductUpdate}
                 mode="edit"
                 product={selectedProduct}
+                categories={categories}
             />
         </AuthenticatedLayout>
     );

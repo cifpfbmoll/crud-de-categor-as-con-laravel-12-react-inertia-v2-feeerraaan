@@ -17,6 +17,7 @@ class Product extends Model
         'price',
         'stock',
         'status',
+        'category_id',
     ];
 
     /**
@@ -27,5 +28,11 @@ class Product extends Model
     protected $casts = [
         'price' => 'decimal:2',
         'stock' => 'integer',
+        'category_id' => 'integer',
     ];
+
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
